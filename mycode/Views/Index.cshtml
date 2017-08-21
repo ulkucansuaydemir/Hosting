@@ -1,0 +1,988 @@
+﻿@model kayzer.project.Models.MainViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section>
+    <div class="col-md-12">
+        <div class="portlet light bordered" id="form_wizard_1">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class=" icon-layers font-red"></i>
+                    <span class="caption-subject font-red bold uppercase">Sunucu Kİralama -</span>
+                    <span class="caption-subject font-red bold uppercase">
+                        @Html.Label(Model.ProductViewModel.ProductName,new { @id="server"})
+                    </span>
+                </div>
+                <div class="actions">
+                    <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
+                        <i class="icon-cloud-upload"></i>
+                    </a>
+                    <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
+                        <i class="icon-wrench"></i>
+                    </a>
+                    <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
+                        <i class="icon-trash"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <form class="form-horizontal" action="#" id="submit_form" method="POST">
+                    <div class="form-wizard">
+                        <div class="form-body">
+                            <ul class="nav nav-pills nav-justified steps">
+                                <li class="active" id="1">
+                                    <a href="#tab1" data-toggle="tab" class="step"  onclick="clickTab1()" >
+                                        <span class="number"> 1 </span>
+                                        <span class="desc">
+                                            <i class="fa fa-check"></i> Donanım
+                                        </span>
+                                    </a>
+                                </li>
+                                <li id="2">
+                                    <a href="#tab2" data-toggle="tab" class="step" onclick="clickTab2()">
+                                        <span class="number"> 2 </span>
+                                        <span class="desc">
+                                            <i class="fa fa-check"></i> Yazılım
+                                        </span>
+                                    </a>
+                                </li>
+                                <li id="3">
+                                    <a href="#tab3" data-toggle="tab" class="step"  onclick="clickTab3()">
+                                        <span class="number"> 3 </span>
+                                        <span class="desc">
+                                            <i class="fa fa-check"></i> İletişim Bilgileri
+                                        </span>
+                                    </a>
+                                </li>
+                                <li onclick="clickTab()" id="4">
+                                    <a href="#tab4" data-toggle="tab" class="step"  onclick="clickTab4()" id="tab4">
+                                        <span class="number"> 4 </span>
+                                        <span class="desc">
+                                            <i class="fa fa-check"></i> Sipariş Detayları
+                                            
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <div id="bar" class="progress progress-striped" role="progressbar">
+                                <div class="progress-bar progress-bar-success"> </div>
+                            </div>
+                            <div class="tab-content">
+                                <div class="alert alert-danger display-none">
+                                    <button class="close" data-dismiss="alert"></button> You have some form errors. Please check below.
+                                </div>
+                                <div class="alert alert-success display-none">
+                                    <button class="close" data-dismiss="alert"></button> Your form validation is successful!
+                                </div>
+                                        <div class="tab-pane active" id="tab1">
+                                            <h3 class="block">Donanımsal Özellikler</h3>
+                                            <div class="alert alert-danger display-hide">
+                                                <button class="close" data-close="alert"></button> You have some form errors. Please check below.
+                                            </div>
+                                            <div class="alert alert-success display-hide">
+                                                <button class="close" data-close="alert"></button> Your form validation is successful!
+                                            </div>
+
+                                                <div class="form-group form-md-line-input">
+                                                    <label class="col-md-3 control-label" for="form_control_1">
+                                                        İşlemci
+                                                        <span class="required">*</span>
+                                                    </label>
+                                                    <div class="col-md-9">
+                                                        <div class="md-radio-inline" onchange="changePro()">
+                                                            @foreach (var item in Model.ProductViewModel.Processor)
+                                                            {
+                                                                <div class="md-radio">
+                                                                    @if (item.ProcessorName == Model.ProductViewModel.DefaultProductModel.Processor)
+                                                                    {
+                                                                        <input type="radio" id="@item.ProcessorName" name="radio1" value="@item.ProcessorPrice" class="md-radiobtn" checked="checked">
+
+                                                                    }
+                                                                    <input type="radio" id="@item.ProcessorName" name="radio1" onchange="changePro()" value="@item.ProcessorPrice" class="md-radiobtn">
+                                                                    <label for="@item.ProcessorName">
+                                                                        <span></span>
+                                                                        <span class="check"></span>
+                                                                        <span class="box"></span> @item.ProcessorName
+                                                                    </label>
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group form-md-line-input">
+                                                    <label class="col-md-3 control-label" for="form_control_1">
+                                                        Ram
+                                                        <span class="required">*</span>
+                                                    </label>
+                                                    <div class="col-md-9">
+                                                        <div class="md-radio-inline" onchange="changeRam()">
+                                                            @foreach (var item in Model.ProductViewModel.Ram)
+                                                            {<div class="md-radio">
+                                                                @if (item.RamName == Model.ProductViewModel.DefaultProductModel.Ram)
+                                                                {
+                                                                    <input type="radio" id="@item.RamName" name="radio2" value="@item.RamPrice" class="md-radiobtn" checked="checked">
+
+                                                                }
+                                                                <input type="radio" id="@item.RamName" name="radio2" value="@item.RamPrice" class="md-radiobtn">
+                                                                <label for="@item.RamName">
+                                                                    <span></span>
+                                                                    <span class="check"></span>
+                                                                    <span class="box"></span> @item.RamName
+                                                                </label>
+                                                            </div>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group form-md-line-input">
+                                                    <label class="col-md-3 control-label" for="form_control_1">
+                                                        Sabit Disk Seçenekleri
+                                                        <span class="required">*</span>
+                                                    </label>
+                                                    <div class="col-md-9">
+                                                        <div class="md-radio-inline" id="deneme3" onchange="changeHard()">
+                                                            @foreach (var item in Model.ProductViewModel.HardDisk)
+                                                            {
+                                                                <div class="md-radio">
+                                                                    @if (item.HardDiskName == Model.ProductViewModel.DefaultProductModel.HardDisk)
+                                                                    {
+                                                                        <input type="radio" id="@item.HardDiskName" name="radio3" value="@item.HardDiskPrice" class="md-radiobtn" checked="checked">
+
+                                                                    }
+                                                                    <input type="radio" id="@item.HardDiskName" name="radio3" value="@item.HardDiskPrice" class="md-radiobtn">
+                                                                    <label for="@item.HardDiskName">
+                                                                        <span></span>
+                                                                        <span class="check"></span>
+                                                                        <span class="box"></span> @item.HardDiskName
+                                                                    </label>
+                                                                </div>
+
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group form-md-line-input">
+                                                    <label class="col-md-3 control-label" for="form_control_1">
+                                                        İnternet Erişimi
+                                                        <span class="required">*</span>
+                                                    </label>
+                                                    <div class="col-md-9">
+                                                        <div class="md-radio-inline" id="deneme4" onchange="changeInt()">
+                                                            @foreach (var item in Model.ProductViewModel.IntAcces)
+                                                            {
+                                                                <div class="md-radio">
+                                                                    @if (item.IntAccName == Model.ProductViewModel.DefaultProductModel.IntAcces)
+                                                                    {
+                                                                        <input type="radio" id="@item.IntAccName" name="radio4" value="@item.IntAccPrice" class="md-radiobtn" checked="checked">
+
+                                                                    }
+                                                                    <input type="radio" id="@item.IntAccName" name="radio4" value="@item.IntAccPrice" class="md-radiobtn">
+                                                                    <label for="@item.IntAccName">
+                                                                        <span></span>
+                                                                        <span class="check"></span>
+                                                                        <span class="box"></span> @item.IntAccName
+                                                                    </label>
+                                                                </div>
+                                                            }
+
+                                                            @*<div class="md-radio">
+                                                            <input type="radio" id="checkbox1_l" name="radio2" value="2" class="md-radiobtn">
+                                                            <label for="checkbox1_l">
+                                                            <span></span>
+                                                            <span class="check"></span>
+                                                            <span class="box"></span> Option 3
+                                                            </label>
+                                                            </div>*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group form-md-line-input">
+                                                    <label class="col-md-3 control-label" for="form_control_1">
+                                                        IP Seçenekleri
+                                                        <span class="required">*</span>
+                                                    </label>
+                                                    <div class="col-md-4">
+                                                        <select name="country" id="ip_list" class="form-control" onchange="combochange()">
+                                                            <option value="1 IP ADRESİ (0 TL)">1 IP ADRESİ (0 TL)</option>
+                                                            <option value="2 IP ADRESİ (3 TL)">2 IP ADRESİ (3 TL)</option>
+                                                            <option value="3 IP ADRESİ (6 TL)">3 IP ADRESİ (6 TL)</option>
+                                                            <option value="4 IP ADRESİ (9 TL)">4 IP ADRESİ (9 TL)</option>
+                                                            <option value="5 IP ADRESİ (24 TL)">5 IP ADRESİ (24 TL)</option>
+                                                            <option value="13 IP ADRESİ (40 TL)">13 IP ADRESİ (40 TL)</option>
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                        <div class="tab-pane" id="tab2" onclick="tabClick()">
+                                            <h3 class="block">Yazılımsal Özellikler</h3>
+                                            <div class="row">
+                                                <label class="control-label col-md-3">Windows/Linux</label>
+                                                <div class="md-radio-inline" id="deneme12">
+                                                    <div class="md-radio">
+                                                        <input type="radio" id="checkbox1_linux" name="radio3" value="2" class="md-radiobtn">
+                                                        <label for="checkbox1_qq">
+                                                            <span></span>
+                                                            <img src="~/Content/img/linux.png" onclick="checkLinux()" class="img-responsive" @*max-width="100px"*@ @*max-height="100px"*@ id="linID"/> 
+                                                        </label>
+                                                    </div>
+                                                    <div class="md-radio">
+                                                        <input type="radio" id="checkbox1_windows" name="radio4" value="1" class="md-radiobtn">
+                                                        <label for="checkbox1_ww">
+                                                            <span></span>
+                                                            <img src="~/Content/img/windows-phone-logo-topic.png" onclick="checkWindows()" class="img-responsive" @*max-width="100px" max-height="100px"*@ id="winID"/>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">İşletim Sistemi</label>
+                                                <div class="col-md-4">
+                                                    <select name="isletm" id="isltm_list" class="form-control">
+                                                        <option value="0"></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">Kontrol Paneli</label>
+                                                <div class="col-md-4">
+                                                    <select name="country" id="contrl_list" class="form-control">
+                                                        <option value="0"></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">Ek Yazılımları</label>
+                                                <div class="col-md-4">
+                                                    <select name="country" id="data_list" class="form-control">
+                                                        <option value="0"></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <h3 class="block">Güvenlik ve Performans Ürünleri</h3>
+                                            <div class="form-group form-md-checkboxes">
+                                                <label class="col-md-3 control-label" for="form_control_1">Güvenlik ve Performans</label>
+                                                <div class="col-md-9">
+                                                    <div class="md-checkbox-inline">
+                                                        @foreach (var item in Model.ExtraProductViewModel)
+                                                        {
+                                                            <div class="md-checkbox">
+                                                                <input type="checkbox" id="checkbox1_@item.ExtraProductID" name="checkboxes2[]" value="@item.ExtraProductName" class="md-check">
+                                                                <label for="checkbox1_@item.ExtraProductID">
+                                                                    <span></span>
+                                                                    <span class="check"></span>
+                                                                    <span class="box"></span>@item.ExtraProductName
+                                                                </label>
+                                                            </div>
+                                                        }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                        <div class="tab-pane" id="tab3">
+                                            <h3 class="block">İletişim Bilgileri</h3>
+                                            <div class="form-group form-md-line-input">
+                                                <label class="col-md-3 control-label" for="form_control_1">
+                                                    Adınız Soyadınız
+                                                    <span class="required">*</span>
+                                                </label>
+                                                <div class="col-md-9">
+                                                    <input type="text" class="form-control" placeholder="" id="name_user">
+                                                    <div class="form-control-focus"> </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group form-md-line-input">
+                                                <label class="col-md-3 control-label" for="form_control_1">
+                                                    Telefon numaranız
+                                                    <span class="required">*</span>
+                                                </label>
+                                                <div class="col-md-9">
+                                                    <input type="text" class="form-control" placeholder="" name="number" id="phone_user">
+                                                    <div class="form-control-focus"> </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group form-md-line-input">
+                                                <label class="col-md-3 control-label" for="form_control_1" name="email">Email
+                                                    <span class="required">*</span>
+                                                </label>
+                                                <div class="col-md-9">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">
+                                                            <i class="fa fa-envelope"></i>
+                                                        </span>
+                                                        <input type="text" class="form-control" name="email" placeholder="Enter your email" id="email_user">
+                                                        <div class="form-control-focus"> </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @*<div class="form-group">
+                                                <label class="control-label col-md-3">
+                                                    Koşullar
+                                                    <span class="required"> * </span>
+                                                </label>
+                                                <div class="col-md-4">
+                                                    <div class="checkbox-list">
+                                                        <label>
+                                                            <input type="checkbox" name="payment[]" value="1" data-title="Auto-Pay with this Credit Card." /> Koşulları okudum ve kabul ediyorum.
+                                                        </label>
+                                                        <label>
+                                                            <input type="checkbox" name="payment[]" value="2" data-title="Email me monthly billing." /> Kampanyalardan haberdar edilmek istiyorum.
+                                                        </label>
+                                                    </div>
+                                                    <div id="form_payment_error"> </div>
+                                                </div>
+                                            </div>*@
+                                        </div>
+                                        <div class="tab-pane" id="tab4">
+                                            <h3 class="block">Sipariş Detayları - <label id="serverName"></label></h3>
+                                            <h4 class="form-section">Müşteri Bilgileri</h4>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">Müşteri Adı:</label>
+                                                <div class="col-md-4">
+                                                    <p class="form-control-static" data-display="username" id="name"> </p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">Email:</label>
+                                                <div class="col-md-4">
+                                                    <p class="form-control-static" data-display="email" id="email"> </p>
+                                                </div>
+                                            </div>
+                                            @*<div class="form-group">
+                                                <label class="control-label col-md-3">Telefon:</label>
+                                                <div class="col-md-4">
+                                                    <p class="form-control-static" data-display="fullname"> </p>
+                                                </div>
+                                            </div>*@
+                                            @*<div class="form-group">
+                                                <label class="control-label col-md-3">Gender:</label>
+                                                <div class="col-md-4">
+                                                    <p class="form-control-static" data-display="gender"> </p>
+                                                </div>
+                                            </div>*@
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">Telefon:</label>
+                                                <div class="col-md-4">
+                                                    <p class="form-control-static" data-display="phone" id="phone"> </p>
+                                                </div>
+                                            </div>
+                                            <h4 class="form-section">Donanım</h4>
+                      
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">İşlemci:</label>
+                                                <div class="col-md-4">
+                                                    <p class="form-control-static" data-display="card_name" id="isl_sec"> </p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">Ram:</label>
+                                                <div class="col-md-4">
+                                                    <p class="form-control-static" data-display="card_number" id="ram_sec"> </p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">Sabit Disk:</label>
+                                                <div class="col-md-4">
+                                                    <p class="form-control-static" data-display="card_cvc" id="hard_sec"> </p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">İnternet Erişimi:</label>
+                                                <div class="col-md-4">
+                                                    <p class="form-control-static" data-display="card_expiry_date" id="int_sec"> </p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">IP Seçeneği:</label>
+                                                <div class="col-md-4">
+                                                    <p class="form-control-static" data-display="payment[]" id="ip_sec"> </p>
+                                                </div>
+                                                @*<label class="col-md-4" ></label>*@
+                                            </div>
+                                            <h4 class="form-section">Yazılım</h4>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">Windows/Linux:</label>
+                                                <div class="col-md-4">
+                                                    <p class="form-control-static" data-display="payment[]" id="win_lin"> </p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">İşletim Sistemi:</label>
+                                                <div class="col-md-4">
+                                                    <p class="form-control-static" data-display="payment[]" id="isl_sis"> </p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">Kontrol Paneli:</label>
+                                                <div class="col-md-4">
+                                                    <p class="form-control-static" data-display="payment[]" id="cntrl_pnl"> </p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">Ek Yazılımlar:</label>
+                                                <div class="col-md-4">
+                                                    <p class="form-control-static" data-display="payment[]" id="ek_yaz"> </p>
+                                                </div>
+                                            </div>
+                                            <h4 class="form-section">Güvenlik ve Performans Ürünleri</h4>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">Güvenlik ve Performans:</label>
+                                                <div class="col-md-4">
+                                                    <p class="form-control-static" data-display="payment[]" id="sec_per"> </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                             </div>
+                        </div>
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-offset-3 col-md-9">
+                                    <a href="" class="btn default button-previous" id="backStep" onclick="clickBack()" data-toggle="tab">
+                                        <i class="fa fa-angle-left"></i> Geri
+                                    </a>
+                                    <a href="" id="nextStep" data-toggle="tab" onclick="clickNext()" class="btn btn-outline red button-next step">
+                                        Devam Et
+                                        <i class="fa fa-angle-right"></i>
+                                    </a>
+                                    <a href="javascript:;" class="btn red button-submit" onclick="onSubmit()" id="OrderButton">
+                                        Sipariş ver
+                                        <i class="fa fa-check"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<nav id="footer" class="navbar navbar-default navbar-fixed-bottom" style="color:#a22525 !important;">
+    <div class="container-fluid" >
+      <div class="row">
+          <div class="form-group">
+              <label class="control-label col-md-3"></label>
+              <div class="col-md-4">
+                  <p class="form-control-static" data-display="payment[]" id="win_lin"> </p>
+              </div>
+          </div>
+          <div class="col-md-4">
+             <h3 class="col-md-3">Ücret:</h3>
+              <div class="col-md-13">
+                  <p class="form-control-static" data-display="payment[]" id="win_lin">
+                      @Html.Label(Model.ProductViewModel.DefaultProductModel.ProductPrice.ToString(), new { @id = "priceLabel" }) TL (KDV Dahil)
+                  </p>
+              </div>
+          </div>
+      </div>
+    </div>
+    <!-- /.container-fluid -->
+</nav>
+@section CustomScripts{
+    <script>
+        var pricessHard = new Array();
+        var pricessRam = new Array();
+        var pricessPro = new Array();
+        var pricessInt = new Array();
+        var extrasWindows = new Array();
+        var extrasLinux = new Array();
+
+
+        var RamFirstSec = @Model.RamViewModel.FirstOrDefault(x => x.RamName == Model.ProductViewModel.DefaultProductModel.Ram).RamPrice;
+        var HardFirstSec = @Model.HardDiskViewModel.FirstOrDefault(x => x.HardDiskName == Model.ProductViewModel.DefaultProductModel.HardDisk).HardDiskPrice;
+        var ProFirstSec = @Model.ProcessorViewModel.FirstOrDefault(x => x.ProcessorName == Model.ProductViewModel.DefaultProductModel.Processor).ProcessorPrice;
+        var IntFirstSec = @Model.InternetAccessViewModel.FirstOrDefault(x => x.IntAccName == Model.ProductViewModel.DefaultProductModel.IntAcces).IntAccPrice;
+
+        var seciliIsltm = 0;
+        var seciliIsltmAdded = 0;
+
+        var secilicontrol = 0;
+        var secilicontrolAdded = 0;
+
+        var secilidata = 0;
+        var secilidataAdded = 0;
+
+        var tabToplam = 0;
+        var winLin = 0;
+
+        function checkLinux() {
+            var linux = $("#checkbox1_linux").val();
+            if (linux) {
+                $.ajax({
+                    url: '/Configure/GetFeatures',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { id: linux },
+                    success: function (data) {
+                        $("#isltm_list").find('option').remove();
+                        $("#contrl_list").find('option').remove();
+                        $("#data_list").find('option').remove();
+                        $.each(data, function (index, value) {
+                            if (value.type == 1) {
+                                var option = $("<option/>").attr("value", value.price);
+                                $(option).text(value.name);
+                                $("#isltm_list").append(option);
+
+                            }
+                            if (value.type == 2) {
+                                var option = $("<option/>").attr("value", value.price);
+                                $(option).text(value.name);
+                                $("#contrl_list").append(option);
+
+
+                            }
+                            if (value.type == 3) {
+                                var option = $("<option/>").attr("value", value.price);
+                                $(option).text(value.name);
+                                $("#data_list").append(option);
+                            }
+                        });
+                    }
+                });
+
+                document.getElementById("win_lin").innerHTML = "Linux";
+            }
+        }
+
+        function calculate(){
+            seciliIsltm =$("#isltm_list").val();
+            secilicontrol = $("#contrl_list").val();
+            secilidata = $("#data_list").val();
+            seciliIsltmAdded++;
+            secilicontrolAdded++;
+            secilidataAdded++;
+
+
+            if(seciliIsltmAdded == 2){
+                console.log( seciliIsltmAdded + "girdii");
+                priceSon = priceSon + parseFloat(seciliIsltm);
+                $('#priceLabel')[0].innerText = priceSon.toString();
+                console.log(seciliIsltm);
+                seciliIsltmAdded++;
+            }
+            if(secilicontrolAdded == 2){
+                console.log( seciliIsltmAdded + "girdii");
+                priceSon = priceSon + parseFloat(secilicontrol);
+                $('#priceLabel')[0].innerText = priceSon.toString();
+                console.log(secilicontrol);
+                secilicontrolAdded++;
+            }
+            if(secilidataAdded == 2){
+                console.log( seciliIsltmAdded + "girdii");
+                priceSon = priceSon + parseFloat(secilidata);
+                $('#priceLabel')[0].innerText = priceSon.toString();
+                console.log(secilidata);
+                secilidataAdded++;
+            }
+        }
+
+        function checkWindows() {
+            var windows = $("#checkbox1_windows").val();
+            if (windows) {
+                //$("#markalar").removeAttr("disabled");
+                $.ajax({
+                    url: '/Configure/GetFeatures',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { id: windows },
+                    success: function (data) {
+                        $("#isltm_list").find('option').remove();
+                        $("#contrl_list").find('option').remove();
+                        $("#data_list").find('option').remove();
+                        $.each(data, function (index, value) {
+                            console.log(value);
+                            if (value.type == 1) {
+
+                                var option = $("<option/>").attr("value", value.price);
+                                $(option).text(value.name);
+                                $("#isltm_list").append(option);
+
+                            }
+                            if (value.type == 2) {
+                                var option = $("<option/>").attr("value", value.price);
+                                $(option).text(value.name);
+                                $("#contrl_list").append(option);
+                                console.log("asdf");
+                            }
+                            if (value.type == 3) {
+                                var option = $("<option/>").attr("value", value.price);
+                                $(option).text(value.name);
+                                $("#data_list").append(option);
+                                console.log("asdf");
+                            }
+                        });
+                    }
+                });
+                document.getElementById("win_lin").innerHTML = "Windows";
+
+            }
+
+        }
+
+        function tabClick() {
+            $.ajax({
+                url: '/Configure/GetExtras',
+                type: 'POST',
+                dataType: 'json',
+                //data: { id: windows },
+                success: function (data) {
+                    $.each(data, function (index, value) {
+
+                    });
+                }
+            })
+        }
+
+        function clickTab1() {
+            document.getElementById("nextStep").style.display = 'inline';
+            document.getElementById("backStep").style.display = 'none';
+            document.getElementById("OrderButton").style.display = 'none';
+
+        }
+
+        function clickTab2() {
+
+            if (@Model.ProductViewModel.DefaultProductModel.OperatingSystem.ToString() == "1") {
+                checkWindows();
+            }
+            else {
+                checkLinux();
+            }
+            document.getElementById("nextStep").style.display = 'inline';
+            document.getElementById("backStep").style.display = 'inline';
+            document.getElementById("OrderButton").style.display = 'none';
+
+            calculate();
+        }
+
+        function clickTab3() {
+            if (@Model.ProductViewModel.DefaultProductModel.OperatingSystem.ToString() == "1") {
+                checkWindows();
+            }
+            else {
+                checkLinux();
+            }
+            document.getElementById("nextStep").style.display = 'inline';
+            document.getElementById("backStep").style.display = 'inline';
+            document.getElementById("OrderButton").style.display = 'none';
+
+
+        }
+
+        function clickTab4() {
+            CalculatePrice();
+            document.getElementById("nextStep").style.display = 'none';
+            document.getElementById("backStep").style.display = 'inline';
+            document.getElementById("OrderButton").style.display = 'inline';
+
+        }
+
+        function CalculatePrice() {
+            if (@Model.ProductViewModel.DefaultProductModel.OperatingSystem.ToString() == "1") {
+                checkWindows();
+            }
+            else {
+                checkLinux();
+            }
+        }
+
+        function clickTab() {
+
+            if(document.getElementById("phone_user").value == ""){
+                alert("Telefon numarası giriniz");
+                
+                $('#tab4').attr('href', "#tab3");
+                $(".active").removeClass().addClass("tab-pane");
+                $("#3").addClass("active");
+                
+            }
+
+            else{
+                document.getElementById("ip_sec").innerText = document.getElementById("ip_list").value;
+                document.getElementById("isl_sec").innerText = $("input:radio[name='radio1']:checked")[0].id;
+                document.getElementById("ram_sec").innerText = $("input:radio[name='radio2']:checked")[0].id;
+                document.getElementById("hard_sec").innerText = $("input:radio[name='radio3']:checked")[0].id;
+                document.getElementById("int_sec").innerText = $("input:radio[name='radio4']:checked")[0].id;
+                document.getElementById("ek_yaz").innerText = document.getElementById("data_list").options[document.getElementById("data_list").selectedIndex].text;
+                document.getElementById("cntrl_pnl").innerText = document.getElementById("contrl_list").options[document.getElementById("contrl_list").selectedIndex].text;
+                document.getElementById("isl_sis").innerText = document.getElementById("isltm_list").options[document.getElementById("isltm_list").selectedIndex].text;
+
+                document.getElementById("name").innerText = document.getElementById("name_user").value;
+                document.getElementById("email").innerText = document.getElementById("email_user").value;
+                document.getElementById("phone").innerText = document.getElementById("phone_user").value;
+                document.getElementById("serverName").innerText = document.getElementById("server").innerText;
+
+                console.log(document.getElementById("phone_user").value);
+
+                //document.getElementById("win_lin").innerHTML =
+
+                // $('input[name="checkboxes2[]"]:checked').length;
+
+                var textx = '';
+                for (var i = 0; i <= $('input[name="checkboxes2[]"]:checked').length - 1; i++) {
+
+                    textx = textx + ' ' + $('input[name="checkboxes2[]"]:checked')[i].value;
+                }
+                $("#sec_per").text(textx);
+            }
+
+
+        }
+
+        if ($('.required:checked').length > 0) {  // the "> 0" part is unnecessary, actually
+            console.log("adaaaa");
+        }
+        $('input[name="checkboxes2[]"]:checked').each(function () {
+            console.log("SAS");
+        });
+
+        $.each($('input[name="checkboxes2[]"]:checked'), function () {
+            alert("asddf");
+            // or you can do something to the actual checked checkboxes by working directly with  'this'
+            // something like $(this).hide() (only something useful, probably) :P
+        });
+
+        //for (var i = 0; i < document.getElementsByName("checkboxes2[]").length; i++) {
+        //    if ($('input[name="checkboxes2[]"]:checked').length > 0) {
+        //        if ($('input[name="checkboxes2[]"]:checked')[i]) {
+        //            alert("asdad");
+        //        }
+
+
+        //    }
+
+        //}
+
+        function onSubmit() {
+
+            var dataObj = {
+                Server: document.getElementById("serverName").innerText,
+                Name: document.getElementById("name").innerText,
+                email: document.getElementById("email").innerText,
+                Phone: document.getElementById("phone").innerText,
+                CPU: document.getElementById("isl_sec").innerText,
+                Ram: document.getElementById("ram_sec").innerText,
+                HardDisc: document.getElementById("hard_sec").innerText,
+                IntAcc: document.getElementById("int_sec").innerText,
+                IPSec: document.getElementById("ip_sec").innerText,
+                OSType: document.getElementById("win_lin").innerText,
+                OS: document.getElementById("isl_sis").innerText,
+                CntrlPnl: document.getElementById("cntrl_pnl").innerText,
+                SecPer: document.getElementById("sec_per").innerText,
+                Price: null,
+                ExtraSoft: document.getElementById("ek_yaz").innerText
+            }
+
+            $.ajax({
+                url: '/Configure/GetOrders',
+                type: 'POST',
+                data: JSON.stringify(dataObj),
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    console.log(data);
+                    alert("Siparişiniz bize ulaşmıştır. En kısa sürede size geri dönüş sağlanacaktır.")
+                }
+            });
+        }
+
+        function clickNext() {
+            var next = (parseInt($(".active")[0].id) + 1).toString();
+            var nextId = "#" + next;
+            var nextstep = "#tab" + next;
+
+            $('#nextStep').attr('href', nextstep);
+            $(".active").removeClass().addClass("tab-pane");
+            $(nextId).addClass("active");
+            if (parseInt($(".active")[0].id) == 4) {
+                document.getElementById("nextStep").style.display = 'none';
+                document.getElementById("OrderButton").style.display = 'inline';
+                clickTab();
+
+            } else {
+                document.getElementById("nextStep").style.display = 'inline';
+
+            }
+            if (parseInt($(".active")[0].id) == 1) {
+                document.getElementById("backStep").style.display = 'none';
+            } else {
+                document.getElementById("backStep").style.display = 'inline';
+            }
+            if (parseInt($(".active")[0].id) == 2) {
+                clickTab2();
+            }
+
+        }
+
+        function clickBack() {
+            var back = (parseInt($(".active")[0].id) - 1).toString();
+            console.log(back);
+            var backId = "#" + back;
+            var backstep = "#tab" + back;
+
+            $('#backStep').attr('href', backstep);
+            $(".active").removeClass().addClass("tab-pane");
+            $(backId).addClass("active");
+            if (parseInt($(".active")[0].id) == 1) {
+                document.getElementById("backStep").style.display = 'none';
+            } else {
+                document.getElementById("backStep").style.display = 'inline';
+            }
+            if (parseInt($(".active")[0].id) == 4) {
+                document.getElementById("nextStep").style.display = 'none';
+                document.getElementById("OrderButton").style.display = 'inline';
+            } else {
+                document.getElementById("nextStep").style.display = 'inline';
+
+            }
+
+        }
+        if (parseInt($(".active")[0].id) == 1) {
+            document.getElementById("backStep").style.display = 'none';
+        } else {
+            document.getElementById("backStep").style.display = 'inline';
+        }
+
+        var priceSon = parseInt($('#priceLabel')[0].innerText);
+
+        $(document).ready(function () {
+            var id = @Model.ProductViewModel.ProductID;
+             var dataObj = {
+                 ProductID: id,
+             }
+             $.ajax({
+                 url: '/Configure/GetPrices',
+                 dataType: 'json',
+                 type: 'POST',
+                 data: JSON.stringify(dataObj),
+                 contentType: 'application/json; charset=utf-8',
+                 success: function (data) {
+                     $.each(data.ProductViewModel.HardDisk, function (index, value) {
+                         pricessHard.push(value.HardDiskPrice);
+                     });
+                     $.each(data.ProductViewModel.Ram, function (index, value) {
+                         pricessRam.push(value.RamPrice);
+                     });
+                     $.each(data.ProductViewModel.Processor, function (index, value) {
+                         pricessPro.push(value.ProcessorPrice);
+                     });
+                     $.each(data.ProductViewModel.IntAcces, function (index, value) {
+                         pricessInt.push(value.IntAccPrice);
+                     });
+
+                     $.each(data.ExtraProductViewModel, function (index, value) {
+                         extrasWindows.push(value);
+                     });
+                 },
+             });
+
+             CalculatePrice();
+
+        });
+         function changeHard() {
+             var selected = $("input:radio[name='radio3']:checked");
+             var valueSel = selected.val();
+             var fark = valueSel - HardFirstSec;
+             HardFirstSec = valueSel;
+             priceSon = priceSon + fark;
+             $('#priceLabel')[0].innerText = priceSon.toString();
+        }
+
+         function changeRam() {
+            var selected = $("input:radio[name='radio2']:checked");
+            var sel = selected.val();
+            var fark;
+            fark = sel - RamFirstSec;
+            RamFirstSec = sel;
+            priceSon = priceSon + fark;
+            $('#priceLabel')[0].innerText = priceSon.toString();
+         }
+
+        function changePro() {
+            var selected = $("input:radio[name='radio1']:checked");
+            var sel = selected.val();
+            var fark;
+            fark = sel - ProFirstSec;
+            ProFirstSec = sel;
+            priceSon = priceSon + fark;
+            $('#priceLabel')[0].innerText = priceSon.toString();
+        }
+
+        function changeInt() {
+            var selected = $("input:radio[name='radio4']:checked");
+            var sel = selected.val();
+            var fark;
+            fark = sel - IntFirstSec;
+            IntFirstSec = sel;
+            priceSon = priceSon + fark;
+            $('#priceLabel')[0].innerText = priceSon.toString();
+        }
+
+        var secili = 0;
+        function combochange() {
+
+            if ($('#ip_list').val() == "1 IP ADRESİ (0 TL)") {
+                console.log(secili);
+                priceSon = priceSon + 0 - secili;
+                secili = 0;
+                $('#priceLabel')[0].innerText = priceSon.toString();
+            }
+            if ($('#ip_list').val() == "2 IP ADRESİ (3 TL)") {
+                console.log(secili);
+                priceSon = priceSon + 3 - secili;
+                secili = 3;
+                $('#priceLabel')[0].innerText = priceSon.toString();
+            }
+            if ($('#ip_list').val() == "3 IP ADRESİ (6 TL)") {
+                console.log(secili);
+                priceSon = priceSon + 6 - secili;
+                secili = 6;
+                $('#priceLabel')[0].innerText = priceSon.toString();
+            }
+            if ($('#ip_list').val() == "4 IP ADRESİ (9 TL)") {
+                console.log(secili);
+                priceSon = priceSon + 9 - secili;
+                secili = 9;
+                $('#priceLabel')[0].innerText = priceSon.toString();
+            }
+            if ($('#ip_list').val() == "5 IP ADRESİ (24 TL)") {
+                console.log(secili);
+                priceSon = priceSon + 24 - secili;
+                secili = 24;
+                $('#priceLabel')[0].innerText = priceSon.toString();
+            }
+            if ($('#ip_list').val() == "13 IP ADRESİ (40 TL)") {
+                console.log(secili);
+                priceSon = priceSon + 40 - secili;
+                secili = 40;
+                $('#priceLabel')[0].innerText = priceSon.toString();
+            }
+        }
+        $("#isltm_list").change(function () {
+            priceSon = priceSon - seciliIsltm + parseFloat($("#isltm_list").val());
+            $('#priceLabel')[0].innerText = priceSon.toString();
+            seciliIsltmAdded = 2;
+        })
+
+        $("#contrl_list").change(function () {
+            priceSon = priceSon - secilicontrol + parseFloat($("#contrl_list").val());
+            $('#priceLabel')[0].innerText = priceSon.toString();
+            secilicontrolAdded = 2;
+
+        })
+        $("#data_list").change(function () {
+            priceSon = priceSon - secilidata + parseFloat($("#data_list").val());
+            $('#priceLabel')[0].innerText = priceSon.toString();
+            secilidataAdded = 2;
+
+        })
+        calculate();
+        document.getElementById("OrderButton").style.display = 'none';
+    </script>
+}
+
